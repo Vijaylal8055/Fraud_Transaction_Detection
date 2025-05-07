@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fraud Transaction Detection</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    label, input { display: block; margin: 10px 0; }
+    button { padding: 10px 20px; }
+  </style>
+</head>
+<body>
+  <h2>Fraud Transaction Detection</h2>
+  <label>Feature 1: <input type="number" id="feature1" /></label>
+  <label>Feature 2: <input type="number" id="feature2" /></label>
+  <label>Amount: <input type="number" id="amount" /></label>
+  <button onclick="predict()">Predict</button>
+  <p id="result"></p>
+
+  <script>
+    async function predict() {
+      const data = {
+        feature1: document.getElementById('feature1').value,
+        feature2: document.getElementById('feature2').value,
+        amount: document.getElementById('amount').value
+      };
+      const res = await fetch('/predict', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      document.getElementById('result').innerText = "Prediction: " + result.prediction;
+    }
+  </script>
+</body>
+</html>
